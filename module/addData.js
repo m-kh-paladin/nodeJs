@@ -14,7 +14,10 @@ const addData = (userData, userDataPath, res) => {
                 }
             } catch (error) {
                 res.writeHead(400, { "content-Type": "application/json" });
-                res.end(JSON.stringify({ error: "Invalid data format" }));
+                res.end(JSON.stringify({
+                    status: 400,
+                    error: "Invalid data format"
+                }));
                 return
             }
         } else {
@@ -24,11 +27,17 @@ const addData = (userData, userDataPath, res) => {
 
         fs.writeFileSync(userDataPath, JSON.stringify(usersData));
 
-        res.writeHead(200, { "content-Type": "text/txt" });
-        res.end("user added successfully");
+        res.writeHead(200, { "content-Type": "application/json" });
+        res.end(JSON.stringify({
+            status: 200,
+            message: "user added successfully"
+        }));
     } else {
         res.writeHead(400, { "content-Type": "application/json" });
-        res.end(JSON.stringify({ error: "Invalid user data" }));
+        res.end(JSON.stringify({
+            status: 400,
+            error: "Invalid user data"
+        }));
     }
 }
 

@@ -1,6 +1,7 @@
-const addData = require("./moudules/addData");
-const getData = require("./moudules/getData");
 const http = require("http");
+
+const addData = require("./module/addData");
+const getData = require("./module/getData");
 
 const userDataPath = "./user.json"
 
@@ -16,7 +17,10 @@ const server = http.createServer((req, res) => {
                 userData = JSON.parse(data);
             } catch (error) {
                 res.writeHead(400, { "content-Type": "application/json" });
-                res.end(JSON.stringify({ error: "Invalid data format" }));
+                res.end(JSON.stringify({
+                    status: 400,
+                    error: "Invalid data format"
+                }));
                 return
             }
             addData(userData, userDataPath, res);
@@ -25,7 +29,10 @@ const server = http.createServer((req, res) => {
             getData(usersData, userDataPath, res);
         } else {
             res.writeHead(404, { "content-Type": "application/json" })
-            res.end(JSON.stringify({ error: "Not Found" }))
+            res.end(JSON.stringify({
+                status: 404,
+                error: "Not Found"
+            }))
         }
     })
 

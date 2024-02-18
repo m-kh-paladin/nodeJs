@@ -7,7 +7,10 @@ const getData = (usersData, userDataPath, res) => {
         res.end(usersData)
     } else {
         res.writeHead(200, { "content-Type": "application/json" })
-        res.end("there is not any user yet")
+        res.end(JSON.stringify({
+            status: 200,
+            message: "there is not any user yet"
+        }))
     }
 }
 
