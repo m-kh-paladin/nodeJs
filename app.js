@@ -1,9 +1,11 @@
+//// node modules
 const http = require("http");
+require('dotenv').config()
 
+//// application modules 
 const addData = require("./module/addData");
 const getData = require("./module/getData");
 
-const userDataPath = "./user.json"
 
 const server = http.createServer((req, res) => {
     let data = "";
@@ -23,10 +25,10 @@ const server = http.createServer((req, res) => {
                 }));
                 return
             }
-            addData(userData, userDataPath, res);
+            addData(userData, res);
         } else if (req.url === "/users/" && req.method === "GET") {
             let usersData
-            getData(usersData, userDataPath, res);
+            getData(usersData, res);
         } else {
             res.writeHead(404, { "content-Type": "application/json" })
             res.end(JSON.stringify({
@@ -38,7 +40,7 @@ const server = http.createServer((req, res) => {
 
 })
 
-const port = 5000
+const port = process.env.port
 
 server.listen(port, () => {
     console.log(`listening to ${port}`);

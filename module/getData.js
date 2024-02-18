@@ -1,8 +1,8 @@
 const fs = require("fs");
 
-const getData = (usersData, userDataPath, res) => {
-    if (fs.existsSync(userDataPath)) {
-        usersData = fs.readFileSync(userDataPath, "utf8")
+const getData = (usersData, res) => {
+    if (fs.existsSync(process.env.userDataPath)) {
+        usersData = fs.readFileSync(process.env.userDataPath, "utf8")
         res.writeHead(200, { "content-Type": "application/json" })
         res.end(usersData)
     } else {
