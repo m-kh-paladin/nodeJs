@@ -3,15 +3,13 @@ const fs = require("fs");
 
 const addData = (userData, res) => {
     if (userData.name) {
-        let usersData;
+        let usersData = [];
         if (fs.existsSync(process.env.userDataPath)) {
             try {
                 const fileContent = fs.readFileSync(process.env.userDataPath, "utf8");
                 if (fileContent.trim() !== "") {
                     usersData = JSON.parse(fileContent);
-                } else {
-                    usersData = [];
-                }
+                } 
             } catch (error) {
                 res.writeHead(400, { "content-Type": "application/json" });
                 res.end(JSON.stringify({
@@ -20,8 +18,6 @@ const addData = (userData, res) => {
                 }));
                 return
             }
-        } else {
-            usersData = [];
         }
         usersData.push(userData);
 
